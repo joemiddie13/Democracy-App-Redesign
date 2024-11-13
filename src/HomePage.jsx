@@ -11,25 +11,25 @@ const HomePage = () => {
       name: 'Rocko',
       party: 'Bark Party',
       slogan: 'Pro-fetch!',
-      imageUrl: '/api/placeholder/400/300'
+      imageUrl: '/public/Rocko.jpeg'
     },
     {
       name: 'Holly',
       party: 'Sniffers Union',
       slogan: 'More parks in neighborhoods!',
-      imageUrl: '/api/placeholder/400/300'
+      imageUrl: '/public/Holly.jpeg'
     },
     {
       name: 'Bishop',
       party: 'Tail Waggers',
       slogan: 'Free treats for all!',
-      imageUrl: '/api/placeholder/400/300'
+      imageUrl: '/public/Bishop.png'
     },
     {
       name: 'Arabella',
       party: 'Howl Movement',
       slogan: 'Anti-mailman!',
-      imageUrl: '/api/placeholder/400/300'
+      imageUrl: '/public/Arabella.png'
     }
   ];
 
