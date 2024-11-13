@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ArrowRight, X, Twitter, Linkedin } from 'lucide-react';
 
 const HomePage = () => {
-  // Added wrapper class fix for full width
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
@@ -38,39 +37,60 @@ const HomePage = () => {
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-gray-900 rounded-lg p-8 max-w-md w-full text-white">
+        <div className="bg-sunset-dark rounded-lg p-8 max-w-md w-full text-sunset-light shadow-xl">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">{type === 'login' ? 'Login' : 'Sign Up'}</h2>
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+            <button onClick={onClose} className="text-sunset-secondary hover:text-sunset-accent transition-colors">
               <X size={24} />
             </button>
           </div>
           
           <form className="space-y-4">
             <div>
-              <label className="block text-gray-300 mb-2">Email</label>
-              <input type="email" className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+              <label className="block text-sunset-secondary mb-2">Email</label>
+              <input 
+                type="email" 
+                className="w-full p-2 border rounded bg-gray-800 text-sunset-light border-gray-700 
+                         focus:border-sunset-secondary focus:ring-1 focus:ring-sunset-secondary outline-none
+                         transition-all duration-200" 
+              />
             </div>
             
             {type === 'signup' && (
               <>
                 <div>
-                  <label className="block text-gray-300 mb-2">First Name</label>
-                  <input type="text" className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+                  <label className="block text-sunset-secondary mb-2">First Name</label>
+                  <input 
+                    type="text" 
+                    className="w-full p-2 border rounded bg-gray-800 text-sunset-light border-gray-700 
+                             focus:border-sunset-secondary focus:ring-1 focus:ring-sunset-secondary outline-none
+                             transition-all duration-200" 
+                  />
                 </div>
                 <div>
-                  <label className="block text-gray-300 mb-2">Last Name</label>
-                  <input type="text" className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+                  <label className="block text-sunset-secondary mb-2">Last Name</label>
+                  <input 
+                    type="text" 
+                    className="w-full p-2 border rounded bg-gray-800 text-sunset-light border-gray-700 
+                             focus:border-sunset-secondary focus:ring-1 focus:ring-sunset-secondary outline-none
+                             transition-all duration-200" 
+                  />
                 </div>
               </>
             )}
             
             <div>
-              <label className="block text-gray-300 mb-2">Password</label>
-              <input type="password" className="w-full p-2 border rounded bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none" />
+              <label className="block text-sunset-secondary mb-2">Password</label>
+              <input 
+                type="password" 
+                className="w-full p-2 border rounded bg-gray-800 text-sunset-light border-gray-700 
+                         focus:border-sunset-secondary focus:ring-1 focus:ring-sunset-secondary outline-none
+                         transition-all duration-200" 
+              />
             </div>
             
-            <button className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
+            <button className="w-full bg-sunset-primary text-sunset-light py-2 rounded hover:bg-opacity-90 
+                           transition-all duration-200 transform hover:scale-[1.02]">
               {type === 'login' ? 'Login' : 'Sign Up'}
             </button>
           </form>
@@ -80,44 +100,46 @@ const HomePage = () => {
   };
 
   const CandidateCard = ({ candidate }) => (
-    <div className="bg-gray-900 rounded-lg p-6 space-y-4">
+    <div className="bg-sunset-dark rounded-lg p-6 space-y-4 transform transition-all duration-200 hover:scale-[1.02]
+                  border border-transparent hover:border-sunset-secondary">
       <img
         src={candidate.imageUrl}
         alt={candidate.name}
         className="w-full h-48 object-cover rounded-lg"
       />
       <div>
-        <h3 className="text-xl font-bold text-white">{candidate.name}</h3>
-        <p className="text-purple-400">{candidate.party}</p>
+        <h3 className="text-xl font-bold text-sunset-light">{candidate.name}</h3>
+        <p className="text-sunset-secondary">{candidate.party}</p>
         <p className="text-gray-300 mt-2">{candidate.slogan}</p>
       </div>
       <div className="flex space-x-4 pt-4">
-        <Twitter className="text-gray-400 hover:text-white cursor-pointer" size={20} />
-        <Linkedin className="text-gray-400 hover:text-white cursor-pointer" size={20} />
+        <Twitter className="text-sunset-secondary hover:text-sunset-accent cursor-pointer transition-colors" size={20} />
+        <Linkedin className="text-sunset-secondary hover:text-sunset-accent cursor-pointer transition-colors" size={20} />
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 w-full">
+    <div className="min-h-screen bg-sunset-dark w-full">
       {/* Navigation */}
-      <nav className="bg-purple-600 p-4">
+      <nav className="bg-gradient-to-r from-sunset-primary to-sunset-secondary p-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex space-x-6">
-            <a href="#" className="text-white font-medium">Democracy App</a>
-            <a href="#candidates" className="text-white">Candidates</a>
-            <a href="#about" className="text-white">About</a>
+            <a href="#" className="text-sunset-light font-medium hover:text-sunset-accent transition-colors">Democracy App</a>
+            <a href="#candidates" className="text-sunset-light hover:text-sunset-accent transition-colors">Candidates</a>
+            <a href="#about" className="text-sunset-light hover:text-sunset-accent transition-colors">About</a>
           </div>
           <div className="flex space-x-4">
             <button 
               onClick={() => setIsSignUpOpen(true)}
-              className="text-white hover:bg-purple-700 px-4 py-2 rounded"
+              className="text-sunset-light hover:bg-sunset-primary/20 px-4 py-2 rounded transition-all duration-200"
             >
               Sign Up
             </button>
             <button 
               onClick={() => setIsLoginOpen(true)}
-              className="bg-white text-purple-600 px-4 py-2 rounded hover:bg-gray-100"
+              className="bg-sunset-light text-sunset-primary px-4 py-2 rounded hover:bg-sunset-accent 
+                      transition-all duration-200"
             >
               Login
             </button>
@@ -128,13 +150,19 @@ const HomePage = () => {
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-white mb-6">Democracy App</h1>
+          <h1 className="text-6xl font-bold text-sunset-light mb-6 
+                       bg-gradient-to-r from-sunset-primary via-sunset-secondary to-sunset-accent 
+                       bg-clip-text text-transparent">
+            Democracy App
+          </h1>
           <p className="text-xl text-gray-300 mb-8">
             Participate in Democracy through ranked choice voting and meaningful discourse 💡
           </p>
           <button 
             onClick={() => setIsSignUpOpen(true)}
-            className="bg-purple-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-purple-700 inline-flex items-center"
+            className="bg-sunset-primary text-sunset-light px-8 py-3 rounded-lg text-lg 
+                     hover:bg-sunset-secondary inline-flex items-center transform transition-all 
+                     duration-200 hover:scale-[1.02] shadow-lg"
           >
             Get Started
             <ArrowRight className="ml-2" size={20} />
@@ -152,7 +180,7 @@ const HomePage = () => {
 
         {/* Candidates Grid */}
         <div id="candidates" className="py-16">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Featured Candidates</h2>
+          <h2 className="text-3xl font-bold text-sunset-light mb-8 text-center">Featured Candidates</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {candidates.map((candidate, index) => (
               <CandidateCard key={index} candidate={candidate} />
