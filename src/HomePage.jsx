@@ -231,6 +231,24 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
+            {/* Vote Button */}
+            <div className="mt-8 mb-16 flex justify-center">
+              <button
+                onClick={() => {
+                  // TODO: Implement voting logic
+                  console.log('Voted:', rankedCandidates);
+                }}
+                disabled={rankedCandidates.length === 0}
+                className="bg-sunset-primary text-sunset-light px-8 py-3 rounded-lg text-lg 
+                         hover:bg-sunset-secondary inline-flex items-center transform transition-all 
+                         duration-200 hover:scale-[1.02] shadow-lg disabled:opacity-50 
+                         disabled:cursor-not-allowed disabled:hover:bg-sunset-primary 
+                         disabled:hover:scale-100"
+              >
+                Submit Vote
+                <ArrowRight className="ml-2" size={20} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -297,7 +315,7 @@ const HomePage = () => {
         </div>
 
         {/* Candidates Grid */}
-        <div id="candidates" className="py-8">
+        <div id="candidates" className="py-8 pb-4">
           <h2 className="text-3xl font-bold text-sunset-light mb-8 text-center">Featured Candidates</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {candidates.map((candidate, index) => (
