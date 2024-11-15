@@ -4,7 +4,7 @@ import { ArrowRight, X, Twitter, Linkedin } from 'lucide-react';
 const HomePage = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-
+  
   const candidates = [
     {
       name: 'Rocko',
@@ -31,6 +31,9 @@ const HomePage = () => {
       imageUrl: '/public/Arabella.png'
     }
   ];
+
+  const [rankedCandidates, setRankedCandidates] = useState([]);
+  const [availableCandidates, setAvailableCandidates] = useState([...candidates]);
 
   const AuthModal = ({ isOpen, onClose, type }) => {
     if (!isOpen) return null;
@@ -119,6 +122,121 @@ const HomePage = () => {
     </div>
   );
 
+  const RankChoiceSection = () => {
+    const handleDragStart = (e, candidate) => {
+      e.dataTransfer.setData('candidate', JSON.stringify(candidate));
+    };
+
+    const handleDragOver = (e) => {
+      e.preventDefault();
+    };
+
+    const handleDrop = (e, index) => {
+      e.preventDefault();
+      const candidate = JSON.parse(e.dataTransfer.getData('candidate'));
+      
+      setRankedCandidates(prev => {
+        const newRanked = [...prev];
+        // Remove candidate if already ranked
+        const existingIndex = newRanked.findIndex(c => c.name === candidate.name);
+        if (existingIndex !== -1) {
+          newRanked.splice(existingIndex, 1);
+        }
+        // Insert at new position
+        newRanked.splice(index, 0, candidate);
+        return newRanked;
+      });
+
+      setAvailableCandidates(prev => 
+        prev.filter(c => c.name !== candidate.name)
+      );
+    };
+
+    const handleRemoveRank = (candidateToRemove) => {
+      setRankedCandidates(prev => 
+        prev.filter(c => c.name !== candidateToRemove.name)
+      );
+      setAvailableCandidates(prev => [...prev, candidateToRemove]);
+    };
+
+    return (
+      <div className="py-1">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-sunset-light mb-8 text-center">
+            Rank Your Candidates
+          </h2>
+          
+          {/* Available Candidates */}
+          <div className="mb-8">
+            <div className="flex flex-wrap gap-4 justify-center">
+              {availableCandidates.map(candidate => (
+                <div
+                  key={candidate.name}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, candidate)}
+                  className="bg-sunset-dark p-4 rounded-lg cursor-move border border-sunset-secondary
+                           hover:border-sunset-accent transition-all duration-200"
+                >
+                  <div className="flex items-center space-x-3">
+                    <img
+                      src={candidate.imageUrl}
+                      alt={candidate.name}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    <span className="text-sunset-light">{candidate.name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Ranking Area */}
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl text-sunset-secondary mb-4">Your Rankings</h3>
+            <div className="space-y-3">
+              {[...Array(4)].map((_, index) => (
+                <div
+                  key={index}
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, index)}
+                  className="border-2 border-dashed border-sunset-secondary rounded-lg p-4
+                           min-h-[80px] flex items-center justify-between
+                           hover:border-sunset-accent transition-all duration-200"
+                >
+                  <div className="flex items-center">
+                    <span className="text-2xl text-sunset-primary font-bold mr-4">
+                      #{index + 1}
+                    </span>
+                    {rankedCandidates[index] && (
+                      <div className="flex items-center space-x-3">
+                        <img
+                          src={rankedCandidates[index].imageUrl}
+                          alt={rankedCandidates[index].name}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                        <span className="text-sunset-light">
+                          {rankedCandidates[index].name}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  {rankedCandidates[index] && (
+                    <button
+                      onClick={() => handleRemoveRank(rankedCandidates[index])}
+                      className="text-sunset-secondary hover:text-sunset-accent transition-colors"
+                    >
+                      <X size={20} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-sunset-dark w-full">
       {/* Navigation */}
@@ -147,7 +265,7 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Title "Democracy App" Section */}
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-6xl font-bold text-sunset-light mb-6 
@@ -179,7 +297,7 @@ const HomePage = () => {
         </div>
 
         {/* Candidates Grid */}
-        <div id="candidates" className="py-16">
+        <div id="candidates" className="py-8">
           <h2 className="text-3xl font-bold text-sunset-light mb-8 text-center">Featured Candidates</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {candidates.map((candidate, index) => (
@@ -188,6 +306,9 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Rank Choice Voting Section */}
+      <RankChoiceSection />
 
       {/* Auth Modals */}
       <AuthModal 
